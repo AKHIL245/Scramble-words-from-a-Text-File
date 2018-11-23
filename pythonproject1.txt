@@ -1,0 +1,45 @@
+print("enter the file name to be scrambled")
+input_file_name=input()
+output_file_name=input_file_name[:-4]+"Scrambled"+".txt"
+
+def scramble(string):
+    if len(string)<=3:
+        return string
+    l=1
+    h=len(string)-2
+    w2=[]
+    w2=list(string)
+    while l<=h:
+        temp=w2[l]
+        w2[l]=w2[h]
+        w2[h]=temp
+
+        l+=1
+        h-=1
+    return ''.join(w2)
+
+f = open(input_file_name, "r")
+num_lines = 0
+for line in f:
+    num_lines += 1
+max=num_lines
+f2 = open(input_file_name, "r")
+f3=open(output_file_name,"w")
+
+while num_lines>0:
+    result=[]
+    lines=f2.readline()
+    lists=lines.split()
+
+    for w in lists:
+        if (w=='.') or (w=='?') or (w=='!') or (w==';') or (w==':') or (w==','):
+            result.append(w)
+        elif (w[-1]=='.') or (w[-1]=='?') or (w[-1]=='!') or (w[-1]==';') or (w[-1]==':') or (w[-1]==','):
+            result.append(scramble(w[:-1])+w[-1])
+        else:
+            result.append(scramble(w))
+
+    final_sen=" ".join(result)+"\n"
+    f3.write(final_sen)
+    num_lines-=1
+
